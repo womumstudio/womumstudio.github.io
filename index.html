@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WoMUM Studio</title>
+<meta name="description" content="Je t'aide à créer ton produit digital avec l'IA. Pour ta liberté de maman.">
+<link rel="icon" href="wm.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Montserrat:wght@300;400&family=WindSong&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivoire:#F7F2EA; --sable:#DCCBB6; --taupe:#7E6F5F; --cacao:#5D4837;
+    --espresso:#251A13; --champagne:#C2A06B;
+    --metal:linear-gradient(100deg,#E9D6A6 0%,#B8925A 35%,#F1E1B8 65%,#A9824C 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--espresso);color:var(--ivoire);font-family:Montserrat,system-ui,sans-serif;font-weight:300;min-height:100vh}
+  main{max-width:440px;margin:0 auto;padding:48px 20px 40px;text-align:center}
+  .logo{width:104px;height:104px;border-radius:50%;display:block;margin:0 auto 22px}
+  h1{font-family:Cinzel,serif;font-weight:500;font-size:28px;letter-spacing:.14em;
+     background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .accent{font-family:WindSong,cursive;color:var(--champagne);font-size:30px;line-height:1;
+          display:inline-block;transform:rotate(-7deg);margin:6px 0 14px}
+  .bio{font-size:14px;line-height:1.7;color:var(--sable)}
+  .line{width:56px;height:1px;background:var(--champagne);margin:28px auto}
+  .links{display:flex;flex-direction:column;gap:14px}
+  .btn{display:block;text-decoration:none;border-radius:14px;padding:18px 20px;transition:transform .15s}
+  .btn:active{transform:scale(.98)}
+  .btn .t{font-family:Cinzel,serif;font-size:15px;letter-spacing:.12em;display:block}
+  .btn .s{font-size:12.5px;line-height:1.5;display:block;margin-top:6px}
+  .kit{background:var(--ivoire);color:var(--espresso)}
+  .kit .t{color:var(--cacao)}
+  .kit .tag{display:inline-block;font-size:10px;letter-spacing:.25em;color:var(--champagne);margin-bottom:8px;font-weight:400}
+  .pub{background:var(--cacao);color:var(--ivoire);border:1px solid rgba(194,160,107,.35)}
+  .pub .tag{display:inline-block;font-size:10px;letter-spacing:.2em;font-weight:400;
+            border:1px solid var(--sable);color:var(--ivoire);border-radius:4px;padding:3px 8px;margin-bottom:10px}
+  .soon{border:1px dashed rgba(220,203,182,.4);color:var(--sable);cursor:default}
+  .soon .t{color:var(--sable)}
+  .social{margin-top:30px;font-size:11px;letter-spacing:.25em;text-transform:uppercase}
+  .social a{color:var(--champagne);text-decoration:none;margin:0 10px}
+  footer{margin-top:28px;font-size:10.5px;line-height:1.6;color:var(--taupe)}
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="wm.jpg" alt="Monogramme WM de WoMUM Studio">
+  <h1>WOMUM STUDIO</h1>
+  <div class="accent">Mum &amp; Muse</div>
+  <p class="bio">Je t'aide à créer ton produit digital avec l'IA.<br>Pour ta liberté de maman.</p>
+  <div class="line"></div>
+
+  <nav class="links">
+    <a class="btn kit" href="kit-digital-muse.pdf" target="_blank" rel="noopener">
+      <span class="tag">OFFERT</span>
+      <span class="t">LE KIT DIGITAL MUSE</span>
+      <span class="s">20 prompts IA pour trouver l'idée de ton premier produit digital, et la checklist de lancement.</span>
+    </a>
+
+    <a class="btn pub" href="https://stan.store/affiliates/0f8b54ad-842b-4bcc-ac94-99aa0328021e" target="_blank" rel="noopener sponsored">
+      <span class="tag">PUBLICITÉ</span>
+      <span class="t">CRÉE TON AGENTE IA</span>
+      <span class="s">Ta Mini Agente IA, la formation de Nab : 8 modules vidéo, un générateur d'agente et des prompts. Lien affilié : je touche une commission si tu l'achètes.</span>
+    </a>
+
+    <div class="btn soon" aria-disabled="true">
+      <span class="t">DIGITAL MUSE</span>
+      <span class="s">Bientôt : je crée ton produit digital pour toi.</span>
+    </div>
+  </nav>
+
+  <div class="social">
+    <a href="https://www.instagram.com/womumstudio/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/@womumstudio" target="_blank" rel="noopener">TikTok</a>
+  </div>
+
+  <footer>© WoMUM Studio · #MumAndMuse</footer>
+</main>
+</body>
+</html>
