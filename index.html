@@ -16,6 +16,7 @@
     --metal:linear-gradient(100deg,#E9D6A6 0%,#B8925A 35%,#F1E1B8 65%,#A9824C 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
   body{background:var(--espresso);color:var(--ivoire);font-family:Montserrat,system-ui,sans-serif;font-weight:300;min-height:100vh}
   main{max-width:440px;margin:0 auto;padding:48px 20px 40px;text-align:center}
   .logo{width:104px;height:104px;border-radius:50%;display:block;margin:0 auto 22px}
@@ -41,6 +42,18 @@
   .social{margin-top:30px;font-size:11px;letter-spacing:.25em;text-transform:uppercase}
   .social a{color:var(--champagne);text-decoration:none;margin:0 10px}
   footer{margin-top:28px;font-size:10.5px;line-height:1.6;color:var(--taupe)}
+  form{margin-top:16px;display:flex;flex-direction:column;gap:10px;text-align:left}
+  form input[type=text],form input[type=email]{font:inherit;font-size:16px;padding:12px 14px;border:1px solid var(--sable);
+    border-radius:10px;background:#fff;color:var(--espresso);width:100%}
+  form input:focus{outline:2px solid var(--champagne);outline-offset:1px}
+  .rgpd{display:flex;gap:10px;align-items:flex-start;font-size:11px;line-height:1.5;color:var(--taupe)}
+  .rgpd input{margin-top:2px;accent-color:var(--cacao);width:16px;height:16px;flex:none}
+  form button,.dl{font-family:Cinzel,serif;font-size:14px;letter-spacing:.14em;border:0;border-radius:10px;padding:14px;
+    background:var(--espresso);color:var(--ivoire);cursor:pointer;text-align:center;text-decoration:none;display:block}
+  form button:disabled{opacity:.6}
+  .dl{margin-top:14px}
+  .err{font-size:12px;color:var(--cacao)}
+  .privacy{margin-top:10px;font-size:10.5px;line-height:1.5;color:var(--taupe)}
 </style>
 </head>
 <body>
@@ -52,11 +65,23 @@
   <div class="line"></div>
 
   <nav class="links">
-    <a class="btn kit" href="kit-digital-muse.pdf" target="_blank" rel="noopener">
+    <section class="btn kit" id="kit">
       <span class="tag">OFFERT</span>
       <span class="t">LE KIT DIGITAL MUSE</span>
       <span class="s">20 prompts IA pour trouver l'idée de ton premier produit digital, et la checklist de lancement.</span>
-    </a>
+      <form id="kitform" novalidate>
+        <input type="text" name="prenom" placeholder="Ton prénom" autocomplete="given-name" required>
+        <input type="email" name="email" placeholder="Ton e-mail" autocomplete="email" required>
+        <label class="rgpd"><input type="checkbox" name="ok" required>
+          <span>J'accepte de recevoir le Kit et les e-mails de WoMUM Studio. Je peux me désinscrire à tout moment.</span></label>
+        <button type="submit">RECEVOIR MON KIT</button>
+        <p class="err" id="kiterr" hidden></p>
+      </form>
+      <div id="kitok" hidden>
+        <span class="s">Merci <b id="kitname"></b>, ton Kit est à toi.</span>
+        <a class="dl" href="kit-digital-muse.pdf" target="_blank" rel="noopener">TÉLÉCHARGER LE KIT</a>
+      </div>
+    </section>
 
     <a class="btn pub" href="https://stan.store/affiliates/0f8b54ad-842b-4bcc-ac94-99aa0328021e" target="_blank" rel="noopener sponsored">
       <span class="tag">PUBLICITÉ</span>
@@ -75,7 +100,27 @@
     <a href="https://www.tiktok.com/@womumstudio" target="_blank" rel="noopener">TikTok</a>
   </div>
 
-  <footer>© WoMUM Studio · #MumAndMuse</footer>
+  <footer>Tes données servent seulement à t’envoyer le Kit et mes nouvelles. Elles ne sont jamais revendues.<br>© WoMUM Studio · #MumAndMuse</footer>
 </main>
+<script>
+// Google Forms : remplacer FORM_ID et les ENTRY_ par ceux du lien prérempli
+const FORM_URL='https://docs.google.com/forms/d/e/FORM_ID/formResponse';
+const ENTRY_PRENOM='entry.PRENOM', ENTRY_EMAIL='entry.EMAIL';
+const f=document.getElementById('kitform'), err=document.getElementById('kiterr');
+f.addEventListener('submit',async e=>{
+  e.preventDefault(); err.hidden=true;
+  const prenom=f.prenom.value.trim(), email=f.email.value.trim();
+  let msg='';
+  if(!prenom) msg='Écris ton prénom.';
+  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg='Vérifie ton e-mail.';
+  else if(!f.ok.checked) msg='Coche la case pour recevoir ton Kit.';
+  if(msg){err.textContent=msg;err.hidden=false;return;}
+  const b=f.querySelector('button'); b.disabled=true; b.textContent='UN INSTANT…';
+  const data=new URLSearchParams(); data.append(ENTRY_PRENOM,prenom); data.append(ENTRY_EMAIL,email);
+  try{ await Promise.race([fetch(FORM_URL,{method:'POST',mode:'no-cors',body:data}),new Promise(r=>setTimeout(r,3000))]); }catch(_){}
+  f.hidden=true; document.getElementById('kitname').textContent=prenom;
+  document.getElementById('kitok').hidden=false;
+});
+</script>
 </body>
 </html>
