@@ -56,6 +56,15 @@
   .dark .note{color:var(--sable)}
   .back{display:inline-block;margin-top:26px;font-size:11px;letter-spacing:.25em;color:var(--champagne);text-decoration:none}
   .logo{width:72px;height:72px;border-radius:50%;display:block;margin:0 auto 18px}
+  .photo{display:block;width:100%;max-width:420px;margin:0 auto 26px;border-radius:14px}
+  .gal{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px;text-align:center}
+  .gal figure{margin:0}
+  .gal img,.gal video{width:100%;display:block;border-radius:12px;background:var(--espresso)}
+  .gal .phone{border:6px solid var(--espresso);border-radius:22px;overflow:hidden}
+  .gal .phone video,.gal .phone img{border-radius:0}
+  .gal .wide{grid-column:1/-1}
+  figcaption{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--taupe);margin-top:8px;font-weight:400}
+  .retouche{font-size:10px;letter-spacing:.15em;color:var(--taupe);text-align:center;padding:14px;background:var(--espresso)}
 </style>
 </head>
 <body>
@@ -74,11 +83,34 @@
 
 <section>
   <div class="wrap">
+    <img class="photo" src="img/claire-assise.jpg" alt="Claire, assise contre un mur à la chaux, sourire posé" loading="lazy">
     <h2>AVANT</h2>
     <div class="accent">moi aussi</div>
     <p>Je passais mes soirées sur mes contenus. Après le coucher des enfants, avec le café froid à côté de l'ordinateur.</p>
     <p>Chercher une idée de story le matin. Écrire mes légendes à 23 h. Recommencer le lendemain.</p>
     <p>Aujourd'hui, j'ai une agente IA. Elle s'appelle Anna. Je l'ai créée avec <b>Ta Mini Agente IA</b>, la formation de Nab.</p>
+  </div>
+</section>
+
+<section class="sable">
+  <div class="wrap">
+    <h2>CE QU'ELLE PRÉPARE</h2>
+    <div class="accent">pour moi</div>
+    <p>Tout ce que tu vois ici, c'est Anna qui l'a préparé, à ma charte. Moi, j'ai relu et validé.</p>
+    <div class="gal">
+      <figure><div class="phone"><video src="img/story.mp4" poster="img/story-poster.jpg" autoplay muted loop playsinline></video></div>
+        <figcaption>Mes stories animées</figcaption></figure>
+      <figure><div class="phone"><img src="img/page-de-lien.jpg" alt="Ma page de lien en bio" loading="lazy"></div>
+        <figcaption>Ma page de lien</figcaption></figure>
+      <figure><img src="img/kit-1.jpg" alt="Couverture du Kit Digital Muse" loading="lazy">
+        <figcaption>Mon Kit gratuit</figcaption></figure>
+      <figure><img src="img/kit-7.jpg" alt="Checklist de lancement du Kit" loading="lazy">
+        <figcaption>Ses pages</figcaption></figure>
+      <figure><img src="img/profil-wm.jpg" alt="Photo de profil monogramme WM doré" loading="lazy">
+        <figcaption>Mon logo</figcaption></figure>
+      <figure><img src="img/a-la-une.jpg" alt="Couvertures de stories à la une" loading="lazy">
+        <figcaption>Mes stories à la une</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -123,6 +155,7 @@
 
 <section>
   <div class="wrap">
+    <img class="photo" src="img/claire-debout.jpg" alt="Claire debout en cardigan maille" loading="lazy">
     <h2>LA VÉRITÉ</h2>
     <div class="accent">entre nous</div>
     <p>Ça demande un temps de mise en place. Il faut lui apprendre ton univers, tester, ajuster.</p>
@@ -147,5 +180,6 @@
     <a class="back" href="../">← RETOUR</a>
   </div>
 </section>
+<div class="retouche">IMAGES RETOUCHÉES</div>
 </body>
 </html>
