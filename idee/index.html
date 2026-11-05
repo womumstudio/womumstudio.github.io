@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ton idée de produit digital · WoMUM Studio</title>
+<meta name="description" content="Réponds à quelques questions : je te propose une idée de produit digital qui te ressemble, et les outils pour la créer.">
+<link rel="icon" href="../wm.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Montserrat:wght@300;400&family=WindSong&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivoire:#F7F2EA; --sable:#DCCBB6; --taupe:#7E6F5F; --cacao:#5D4837;
+    --espresso:#251A13; --champagne:#C2A06B;
+    --metal:linear-gradient(100deg,#E9D6A6 0%,#B8925A 35%,#F1E1B8 65%,#A9824C 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none!important}
+  html,body{min-height:100%}
+  body{background:var(--ivoire);color:var(--espresso);font-family:Montserrat,system-ui,sans-serif;font-weight:300;min-height:100vh;transition:background .4s}
+  body.dark{background:var(--espresso);color:var(--ivoire)}
+  main{max-width:460px;margin:0 auto;padding:40px 22px 36px;text-align:center}
+  .screen{animation:in .45s ease both}
+  @keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .logo{width:92px;height:92px;border-radius:50%;display:block;margin:0 auto 26px}
+  h1,h2{font-family:Cinzel,serif;font-weight:500;letter-spacing:.12em;line-height:1.35}
+  h1{font-size:26px}
+  .dark h1{background:var(--metal);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h2{font-size:20px;color:var(--cacao)}
+  .accent{font-family:WindSong,cursive;color:var(--champagne);font-size:34px;line-height:1;
+          display:inline-block;transform:rotate(-7deg);margin:8px 0 18px}
+  .lead{font-size:15px;line-height:1.75}
+  .dark .lead{color:var(--sable)}
+  .small{font-size:11px;letter-spacing:.08em;color:var(--taupe);margin-top:16px;line-height:1.6}
+  .dark .small{color:var(--sable);opacity:.7}
+  .line{width:56px;height:1px;background:var(--champagne);margin:26px auto}
+  .cta{font-family:Cinzel,serif;font-size:14px;letter-spacing:.14em;border:0;border-radius:8px;padding:16px 22px;
+       background:var(--espresso);color:var(--ivoire);cursor:pointer;display:block;width:100%;text-decoration:none;text-align:center;margin-top:24px}
+  .dark .cta{background:var(--ivoire);color:var(--espresso)}
+  .cta:disabled{opacity:.4;cursor:default}
+  .ghost{background:none;border:0;font:inherit;font-size:12px;letter-spacing:.12em;color:var(--taupe);cursor:pointer;margin-top:16px;text-transform:uppercase}
+  /* interview */
+  .progress{height:2px;background:var(--sable);border-radius:2px;overflow:hidden;margin-bottom:10px}
+  .progress i{display:block;height:100%;background:var(--champagne);transition:width .4s}
+  .count{font-size:10.5px;letter-spacing:.25em;color:var(--taupe);text-align:right;margin-bottom:34px}
+  .q{font-family:Cinzel,serif;font-weight:500;font-size:19px;letter-spacing:.06em;color:var(--cacao);line-height:1.5;margin-bottom:8px}
+  .hint{font-size:12.5px;color:var(--taupe);line-height:1.6;margin-bottom:22px}
+  .choices{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+  .choice{font:inherit;font-size:14.5px;font-weight:400;padding:15px 16px;border-radius:8px;border:1px solid transparent;
+          background:var(--sable);color:var(--espresso);cursor:pointer;text-align:center;transition:border-color .15s,transform .1s}
+  .choice:active{transform:scale(.98)}
+  .choice.on{border-color:var(--champagne);background:#E8DBC9;box-shadow:0 0 0 1px var(--champagne) inset}
+  input[type=text],input[type=email]{font:inherit;font-size:16px;padding:14px;border:1px solid var(--sable);border-radius:8px;
+          background:#fff;color:var(--espresso);width:100%;text-align:center}
+  input:focus{outline:2px solid var(--champagne);outline-offset:1px}
+  /* chargement */
+  .pulse{animation:pulse 1.4s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(1.06);opacity:.75}}
+  /* proposition */
+  .card{background:#FBF8F3;border:1px solid rgba(194,160,107,.55);border-radius:10px;padding:22px 20px;margin-top:16px;text-align:left;box-shadow:0 6px 20px rgba(37,26,19,.05)}
+  .card.alt{background:var(--sable)}
+  .card h3{font-family:Cinzel,serif;font-weight:500;font-size:15px;letter-spacing:.1em;color:var(--cacao);margin-bottom:8px}
+  .lbl{font-size:10px;letter-spacing:.28em;color:var(--champagne);font-weight:400;margin-bottom:6px;display:block}
+  .card p,.card li{font-size:14px;line-height:1.7}
+  .card ol,.card ul{padding-left:20px;margin-top:4px}
+  .prod{font-family:Cinzel,serif;font-size:18px;letter-spacing:.08em;color:var(--espresso);line-height:1.4;margin-bottom:6px}
+  .truth{border-left:1px solid var(--champagne);padding-left:14px;font-style:italic}
+  /* outils */
+  .tools-title{margin-top:40px}
+  .tool{border-radius:10px;padding:22px 20px;margin-top:14px;text-align:left;position:relative}
+  .tool .tag{display:inline-block;font-size:10px;letter-spacing:.25em;font-weight:400;padding:4px 9px;border-radius:4px;
+             background:var(--espresso);color:var(--champagne);margin-bottom:10px}
+  .tool h3{font-family:Cinzel,serif;font-weight:500;font-size:16px;letter-spacing:.1em;margin-bottom:8px}
+  .tool p{font-size:13.5px;line-height:1.65}
+  .tool .who{font-size:12px;color:var(--taupe);margin-top:8px}
+  .tool .go{font-family:Cinzel,serif;font-size:13px;letter-spacing:.14em;border:0;border-radius:8px;padding:13px;margin-top:14px;
+            display:block;text-align:center;text-decoration:none;cursor:pointer;width:100%}
+  .t-kit{background:#FBF8F3;border:1px solid rgba(194,160,107,.55)}
+  .t-kit h3{color:var(--cacao)} .t-kit .go{background:var(--espresso);color:var(--ivoire)}
+  .t-pub{background:var(--cacao);color:var(--ivoire)}
+  .t-pub .tag{background:var(--ivoire);color:var(--espresso)}
+  .t-pub .who{color:var(--sable)} .t-pub .go{background:var(--ivoire);color:var(--espresso)}
+  .t-dm{background:var(--sable)}
+  .t-dm h3{color:var(--cacao)} .t-dm .go{background:var(--espresso);color:var(--ivoire)}
+  .star{font-size:10px;letter-spacing:.2em;color:var(--champagne);margin-left:8px;font-weight:400}
+  .t-pub .star{color:var(--sable)}
+  form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+  form input[type=text],form input[type=email]{text-align:left}
+  .fmt{display:flex;gap:8px}
+  .fmt label{flex:1;font-size:12.5px;text-align:center;padding:10px 4px;border-radius:8px;border:1px solid rgba(37,26,19,.15);background:var(--ivoire);cursor:pointer}
+  .fmt input{display:none}
+  .fmt input:checked+span{font-weight:400;color:var(--cacao)}
+  .fmt label:has(input:checked){border-color:var(--champagne);box-shadow:0 0 0 1px var(--champagne) inset}
+  .rgpd{display:flex;gap:10px;align-items:flex-start;font-size:11px;line-height:1.5;color:var(--taupe)}
+  .rgpd input{margin-top:2px;accent-color:var(--cacao);width:16px;height:16px;flex:none}
+  .err{font-size:12px;color:var(--cacao)}
+  .ok{font-size:14px;line-height:1.6;margin-top:12px;color:var(--cacao)}
+  footer{margin-top:40px;font-size:10.5px;line-height:1.7;color:var(--taupe)}
+  .dark footer{color:var(--sable);opacity:.6}
+  footer a{color:inherit}
+</style>
+</head>
+<body class="dark">
+<main id="app"></main>
+<script>
+/* =========================================================
+   Liste d'attente Digital Muse : Google Forms.
+   Par défaut, les inscriptions vont dans le formulaire du Kit
+   (prénom + e-mail). Pour une liste séparée, crée un formulaire
+   « Liste d'attente Digital Muse » et remplace les 4 lignes ci-dessous.
+   ========================================================= */
+const WAIT_FORM='https://docs.google.com/forms/d/e/1FAIpQLScJW_NS8SKRhPcf8UmIoXjSilS3yfFJ-Ebx1qPXcmgUItO1aA/formResponse';
+const WAIT_PRENOM='entry.951687260', WAIT_EMAIL='entry.54220876';
+const WAIT_FORMAT=''; // ex. 'entry.123456' si ton formulaire a une question « Format »
+
+const AFFILIATE_PAGE='../agente-ia/';
+const KIT_PAGE='../#kit';
+
+/* ---------- Les questions ---------- */
+const Q=[
+ {id:'prenom',type:'text',q:'Comment je t\'appelle ?',ph:'Ton prénom'},
+ {id:'situation',q:'Ta situation aujourd\'hui ?',c:['Salariée','Maman au foyer','Indépendante ou entrepreneuse','En reconversion','Autre']},
+ {id:'activite',q:'Tu as déjà une activité ou une communauté en ligne ?',c:['Non, je pars de zéro','Oui, une petite communauté','Oui, une activité qui tourne']},
+ {id:'sujet',q:'Le sujet dont tu pourrais parler des heures ?',hint:'Choisis celui qui te ressemble le plus.',
+  c:['Organisation et quotidien de famille','Cuisine et repas','Budget et finances perso','Maternité et bébé','Bien-être et confiance en soi','Activités et éducation des enfants','Couture, DIY et créatif','Mon métier ou ma compétence pro']},
+ {id:'precision',type:'text',optional:true,q:'Dis-m\'en un peu plus',hint:'Ce que tes amies te demandent tout le temps, ton métier, ta passion… En quelques mots.',ph:'ex. le batch cooking, la compta, le portage…'},
+ {id:'cible',q:'Tu voudrais aider qui en priorité ?',c:['Les mamans','Les femmes qui se lancent','Les entrepreneuses','Les familles']},
+ {id:'temps',q:'Combien de temps tu peux y consacrer par semaine ?',c:['Moins de 3 h','3 à 6 h','Plus de 6 h']},
+ {id:'tech',q:'Ton aisance avec la technique ?',c:['Je débute','Je me débrouille','À l\'aise']},
+ {id:'mode',q:'Pour créer ton produit, tu préfères…',c:['Créer moi-même avec l\'IA','Être accompagnée','Qu\'on le fasse pour moi']},
+ {id:'frein',q:'Ce qui te freine le plus ?',c:['Le temps','La technique','Me montrer','Je ne sais pas par où commencer']}
+];
+
+/* ---------- Les idées par sujet ---------- */
+const IDEAS={
+ 'Organisation et quotidien de famille':{benef:'souffler un peu dans leur quotidien',
+  pdf:[{n:'Le Planner Maman Sereine',d:'Un planner imprimable pour organiser la semaine de toute la famille sur une seule page.',p:['La semaine en un coup d\'œil','Les routines du matin et du soir','Le planning des repas','La répartition des tâches à la maison','La page « rien que pour moi »']},
+       {n:'Le Guide des Routines Douces',d:'Un guide pour poser des routines simples qui allègent les matins et les soirs.',p:['Repérer ce qui coince','La routine du matin','La routine du soir','Les routines en images pour les enfants','Ajuster sans culpabiliser']}],
+  app:{n:'Le Planificateur de Semaine Familiale',d:'Une mini-appli où l\'on note les tâches de la semaine et qui les répartit entre les membres de la famille.',p:['Saisie des tâches et des personnes','Répartition automatique','Vue de la semaine','Liste à cocher partagée','Rappel du dimanche soir']}},
+ 'Cuisine et repas':{benef:'ne plus se demander chaque soir « on mange quoi ? »',
+  pdf:[{n:'Le Carnet de Menus de la Semaine',d:'Des menus de saison prêts à suivre, avec la liste de courses qui va avec.',p:['Comment utiliser le carnet','Les menus par saison','Les listes de courses','Les bases à préparer à l\'avance','Les recettes doudou des enfants']},
+       {n:'Les Recettes du Soir en Famille',d:'Un recueil de recettes simples pour les soirs chargés, testées à la maison.',p:['Le placard idéal','Les recettes avec un seul plat','Les recettes à préparer la veille','Les desserts du week-end','Les fiches à imprimer']}],
+  app:{n:'Le Générateur de Menus',d:'Une mini-appli qui propose des menus de la semaine selon les envies et ce qu\'il reste dans le frigo.',p:['Choix des préférences','Ingrédients disponibles','Proposition de menus','Liste de courses automatique','Favoris de la famille']}},
+ 'Budget et finances perso':{benef:'reprendre la main sur leur budget, sans prise de tête',
+  pdf:[{n:'Le Planner Budget Famille',d:'Un planner pour suivre le budget du mois et les projets de la famille.',p:['Faire le point de départ','Le budget du mois','Le suivi des dépenses','Les projets à financer','Le bilan du mois']},
+       {n:'Le Journal Mes Finances en Douceur',d:'Un journal guidé pour apaiser sa relation à l\'argent, page après page.',p:['Mon histoire avec l\'argent','Mes peurs et mes envies','Mes petites victoires','Mes objectifs','Les pages bilan']}],
+  app:{n:'Le Calculateur de Projets',d:'Une mini-appli qui calcule combien mettre de côté chaque mois pour un projet (vacances, rentrée, Noël).',p:['Choix du projet','Montant et échéance','Calcul de l\'épargne mensuelle','Suivi de progression','Plusieurs projets en parallèle']}},
+ 'Maternité et bébé':{benef:'vivre les premiers mois avec plus de sérénité',
+  pdf:[{n:'Le Guide des Premiers Mois',d:'Un guide doux et pratique pour les jeunes mamans, avec des checklists.',p:['Préparer l\'arrivée','La valise de maternité','Les premières semaines','Prendre soin de soi','Les ressources utiles']},
+       {n:'Le Journal de Grossesse',d:'Un journal à remplir mois après mois, à garder en souvenir.',p:['Mes premières émotions','Le suivi mois par mois','Les préparatifs','Lettres à mon bébé','La rencontre']}],
+  app:{n:'Le Carnet de Suivi Bébé',d:'Une mini-appli pour noter les repas, le sommeil et les petites premières de bébé.',p:['Suivi des repas','Suivi du sommeil','Les premières fois','Notes pour le pédiatre','Vue de la journée']}},
+ 'Bien-être et confiance en soi':{benef:'retrouver confiance en elles et du temps pour elles',
+  pdf:[{n:'Le Journal Confiance en Moi',d:'Un journal guidé avec des questions d\'écriture pour (re)prendre confiance, pas à pas.',p:['Où j\'en suis','Mes forces','Mes croyances à revisiter','Mes petits défis','Ma lettre à moi-même']},
+       {n:'Le Carnet Rituels du Soir',d:'Des rituels courts pour finir la journée en douceur, même avec des enfants.',p:['Pourquoi un rituel','Les rituels de 5 minutes','Le journal de gratitude','Les pages « je dépose »','Mon rituel sur mesure']}],
+  app:{n:'Le Quiz « Ce qui bloque ta confiance »',d:'Une mini-appli quiz qui aide chaque femme à identifier son principal blocage et lui propose des pistes.',p:['Les questions du quiz','Les 4 profils','Les pistes par profil','Un exercice à faire','Le partage du résultat']}},
+ 'Activités et éducation des enfants':{benef:'passer des moments simples et joyeux avec leurs enfants',
+  pdf:[{n:'Le Cahier d\'Activités du Mercredi',d:'Des activités à imprimer, rangées par âge, avec le matériel de la maison.',p:['Le matériel de base','Les activités 3-5 ans','Les activités 6-8 ans','Les activités jours de pluie','Le tableau des réussites']},
+       {n:'Le Kit Routines en Images',d:'Des cartes à imprimer pour aider les enfants à suivre leurs routines tout seuls.',p:['Comment s\'en servir','La routine du matin','La routine du soir','Les cartes « émotions »','Le tableau de motivation']}],
+  app:{n:'Le Tirage d\'Activités',d:'Une mini-appli qui propose une activité selon l\'âge de l\'enfant, la météo et le temps disponible.',p:['Âge et envies','Dedans ou dehors','Durée disponible','L\'activité proposée','Les favorites']}},
+ 'Couture, DIY et créatif':{benef:'oser créer de leurs mains, même en débutant',
+  pdf:[{n:'Le Guide Pas-à-Pas',d:'Un guide illustré pour réaliser tes créations phares, étape par étape.',p:['Le matériel','Les bases','Le projet 1','Le projet 2','Les astuces de finition']},
+       {n:'Le Carnet de Projets Créatifs',d:'Un carnet pour planifier, suivre et garder la trace de ses créations.',p:['Ma liste d\'envies','La fiche projet','Le suivi du matériel','Mes inspirations','Mes réalisations']}],
+  app:{n:'Le Calculateur de Prix Créatrice',d:'Une mini-appli qui aide les créatrices à calculer le juste prix de leurs créations.',p:['Coût du matériel','Temps passé','Frais annexes','Prix conseillé','Fiches produits enregistrées']}},
+ 'Mon métier ou ma compétence pro':{benef:'gagner en clarté sur un sujet que tu maîtrises',
+  pdf:[{n:'Le Guide Pratique de ton expertise',d:'Un guide qui transmet ce que tu sais faire, avec des exemples concrets.',p:['Les bases à connaître','Les erreurs fréquentes','La méthode pas à pas','Les modèles à copier','La checklist finale']},
+       {n:'La Checklist Pro',d:'Une checklist imprimable qui résume ta méthode, pour ne rien oublier.',p:['Avant de commencer','Pendant','Après','Les questions à se poser','Les ressources']}],
+  app:{n:'Le Quiz Diagnostic',d:'Une mini-appli quiz qui fait le point sur la situation de la personne et lui donne ses premières pistes.',p:['Les questions du diagnostic','Le score par thème','Les pistes personnalisées','Les ressources','Le lien vers ton offre']}}
+};
+const CIBLE={'Les mamans':'Les mamans','Les femmes qui se lancent':'Les femmes qui se lancent','Les entrepreneuses':'Les entrepreneuses','Les familles':'Les familles'};
+const FREIN={
+ 'Le temps':'Bloque deux créneaux fixes dans ta semaine, même courts. La régularité compte plus que la durée.',
+ 'La technique':'Commence par le format le plus simple. Un document bien fait, c\'est déjà un vrai produit.',
+ 'Me montrer':'Ton produit peut parler avant toi. Pas besoin d\'être face caméra pour commencer.',
+ 'Je ne sais pas par où commencer':'Le Kit Digital Muse est fait pour ça : il t\'emmène pas à pas, de l\'idée à la checklist.'
+};
+const TRUTHS=['Un premier produit, ça demande du temps et des essais. C\'est normal.',
+ 'Ton premier produit ne sera pas parfait. Il sera à toi, et c\'est le début.',
+ 'Personne ne se sent prête. On le devient en avançant.'];
+
+/* ---------- État ---------- */
+const A={}; let step=0, variant=0;
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dark=on=>document.body.classList.toggle('dark',on);
+const footer=`<footer>Tes réponses restent sur ton téléphone. Seul ton e-mail est enregistré si tu rejoins la liste d'attente.<br>© WoMUM Studio · <a href="../">Accueil</a> · #MumAndMuse</footer>`;
+function show(html){app.innerHTML=`<div class="screen">${html}</div>`;window.scrollTo(0,0);}
+
+/* ---------- Accueil ---------- */
+function home(){
+ dark(true);
+ show(`<img class="logo" src="../wm.jpg" alt="Monogramme WM de WoMUM Studio">
+  <h1>TON IDÉE DE<br>PRODUIT DIGITAL</h1>
+  <div class="accent">à toi</div>
+  <p class="lead">Réponds à quelques questions.<br>Je te propose une idée de produit qui te ressemble, et les outils pour la créer.</p>
+  <button class="cta" id="go">JE COMMENCE</button>
+  <p class="small">10 questions · Tes réponses restent privées</p>${footer}`);
+ document.getElementById('go').onclick=()=>{step=0;ask();};
+}
+
+/* ---------- Interview ---------- */
+function ask(){
+ dark(false);
+ const q=Q[step], v=A[q.id]||'';
+ let body;
+ if(q.type==='text'){
+  body=`<input type="text" id="t" placeholder="${esc(q.ph||'')}" value="${esc(v)}" maxlength="60" autocomplete="${q.id==='prenom'?'given-name':'off'}">
+   <button class="cta" id="next" ${!q.optional&&!v?'disabled':''}>CONTINUER</button>`;
+ }else{
+  body=`<div class="choices">${q.c.map(c=>`<button class="choice${v===c?' on':''}" data-v="${esc(c)}">${esc(c)}</button>`).join('')}</div>`;
+ }
+ show(`<div class="progress"><i style="width:${(step/Q.length)*100}%"></i></div>
+  <div class="count">${step+1}/${Q.length}</div>
+  <p class="q">${esc(q.q)}</p>${q.hint?`<p class="hint">${esc(q.hint)}</p>`:''}
+  ${body}
+  <button class="ghost" id="back">${step===0?'Accueil':'Retour'}</button>`);
+ document.getElementById('back').onclick=()=>{if(step===0)home();else{step--;ask();}};
+ if(q.type==='text'){
+  const t=document.getElementById('t'), n=document.getElementById('next');
+  t.focus();
+  t.oninput=()=>{n.disabled=!q.optional&&!t.value.trim();};
+  const go=()=>{if(n.disabled)return;A[q.id]=t.value.trim();next();};
+  n.onclick=go; t.onkeydown=e=>{if(e.key==='Enter')go();};
+ }else{
+  app.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+   app.querySelectorAll('.choice').forEach(x=>x.classList.remove('on'));
+   b.classList.add('on'); A[q.id]=b.dataset.v; setTimeout(next,220);
+  });
+ }
+}
+function next(){step++; if(step<Q.length)ask(); else loading();}
+
+function loading(){
+ dark(true);
+ show(`<img class="logo pulse" src="../wm.jpg" alt="" style="margin-top:80px">
+  <p class="lead">Je prépare ta proposition…</p>`);
+ setTimeout(()=>{variant=0;result();},1700);
+}
+
+/* ---------- Proposition ---------- */
+function choose(){
+ const S=IDEAS[A.sujet]||IDEAS['Mon métier ou ma compétence pro'];
+ const debut=A.tech==='Je débute', peu=A.temps==='Moins de 3 h', aise=A.tech==='À l\'aise', bcp=A.temps==='Plus de 6 h';
+ let fmt;
+ if(debut||peu) fmt='pdf';
+ else if(aise&&bcp) fmt='app';
+ else fmt='both';
+ const pdf=S.pdf[variant%2];
+ return {S,fmt,pdf,app:S.app};
+}
+function result(){
+ dark(false);
+ const {S,fmt,pdf,app:ap}=choose();
+ const prenom=A.prenom||'Ma Muse';
+ const prec=A.precision?` Avec ta touche à toi : ${esc(A.precision)}.`:'';
+ let prod, fmtTitle, fmtWhy;
+ if(fmt==='pdf'){prod=pdf;fmtTitle='Un PDF';
+  fmtWhy=A.tech==='Je débute'?'Tu débutes avec la technique : un PDF se crée avec l\'IA et un éditeur simple. C\'est le format idéal pour un premier produit.'
+   :'Avec ton temps disponible, un PDF te permet de créer un vrai produit sans t\'éparpiller.';}
+ else if(fmt==='app'){prod=ap;fmtTitle='Une mini-appli';
+  fmtWhy='Tu es à l\'aise et tu as du temps : une mini-appli interactive rend ton idée vivante et utile au quotidien.';}
+ else{prod=pdf;fmtTitle='Un PDF d\'abord, puis une mini-appli';
+  fmtWhy=`Commence par le PDF pour tester ton idée. Ensuite, tu pourras la décliner en mini-appli : « ${esc(ap.n)} ».`;}
+ const steps=fmt==='app'
+  ?['Utilise les prompts du Kit pour résumer ton idée en une phrase.','Dessine sur papier les 3 écrans principaux de ton appli.','Fais tester une première version à 3 personnes de ton entourage.']
+  :['Utilise les prompts du Kit pour résumer ton idée en une phrase.','Demande à ta communauté (un sondage en story suffit) ce qui lui manque sur ce sujet.','Rédige le plan de ton PDF avec l\'IA, puis un premier chapitre.'];
+ const cible=CIBLE[A.cible]||'Les femmes';
+ const hasActi=A.activite&&A.activite.startsWith('Oui');
+ const wantsDFY=A.mode==='Qu\'on le fasse pour moi'||A.mode==='Être accompagnée';
+ const tools=[];
+ tools.push({k:'kit',star:!hasActi&&!wantsDFY});
+ const pubT={k:'pub',star:hasActi}, dmT={k:'dm',star:wantsDFY};
+ if(wantsDFY){tools.push(dmT,pubT);}else{tools.push(pubT,dmT);}
+ if(wantsDFY) tools.unshift(tools.splice(tools.indexOf(dmT),1)[0]);
+ else if(hasActi) tools.unshift(tools.splice(tools.indexOf(pubT),1)[0]);
+
+ show(`<h2>${esc(prenom).toUpperCase()},</h2>
+  <div class="accent" style="margin-bottom:6px">voici ton idée</div>
+  <div class="card">
+   <span class="lbl">TON PRODUIT</span>
+   <p class="prod">${esc(prod.n)}</p>
+   <p>${esc(prod.d)}${prec}</p>
+  </div>
+  <div class="card alt">
+   <span class="lbl">LE FORMAT</span>
+   <h3>${esc(fmtTitle).toUpperCase()}</h3>
+   <p>${fmtWhy}</p>
+  </div>
+  <div class="card">
+   <span class="lbl">POUR QUI</span>
+   <p>${esc(cible)} qui veulent ${esc(S.benef)}.</p>
+  </div>
+  <div class="card">
+   <span class="lbl">CE QU'IL CONTIENT</span>
+   <ol>${prod.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+  </div>
+  <div class="card alt">
+   <span class="lbl">TES 3 PREMIÈRES ÉTAPES</span>
+   <ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol>
+   ${A.frein&&FREIN[A.frein]?`<p style="margin-top:10px"><b style="font-weight:400">Ton frein, « ${esc(A.frein.toLowerCase())} » :</b> ${FREIN[A.frein]}</p>`:''}
+  </div>
+  <div class="card">
+   <span class="lbl">UNE VÉRITÉ HONNÊTE</span>
+   <p class="truth">${TRUTHS[variant%TRUTHS.length]}</p>
+  </div>
+  ${fmt!=='app'?`<button class="ghost" id="other">Une autre idée</button>`:''}
+
+  <div class="line"></div>
+  <h2 class="tools-title" style="margin-top:0">LES OUTILS</h2>
+  <div class="accent" style="margin-bottom:4px">pour la créer</div>
+  ${tools.map(t=>toolHTML(t)).join('')}
+
+  <div class="line"></div>
+  <p class="lead">Ton idée te plaît ?<br>Dis-le-moi en commentaire sur Instagram ou TikTok : <b style="font-weight:400">@womumstudio</b></p>
+  <button class="cta" id="restart">RECOMMENCER L'INTERVIEW</button>
+  <img class="logo" src="../wm.jpg" alt="" style="width:56px;height:56px;margin:34px auto 0">
+  ${footer}`);
+ const o=document.getElementById('other'); if(o) o.onclick=()=>{variant++;result();};
+ document.getElementById('restart').onclick=()=>{for(const k in A)delete A[k];home();};
+ bindWait();
+}
+function toolHTML(t){
+ const star=t.star?`<span class="star">POUR TOI</span>`:'';
+ if(t.k==='kit') return `<div class="tool t-kit"><span class="tag">OFFERT</span>${star}
+   <h3>LE KIT DIGITAL MUSE</h3>
+   <p>20 prompts IA pour trouver et préciser ton idée, et une checklist de lancement.</p>
+   <p class="who">Pour toutes, surtout si tu démarres.</p>
+   <a class="go" href="${KIT_PAGE}">JE RÉCUPÈRE LE KIT</a></div>`;
+ if(t.k==='pub') return `<div class="tool t-pub"><span class="tag">PUBLICITÉ</span>${star}
+   <h3>CRÉE TON AGENTE IA</h3>
+   <p>Ta Mini Agente IA, la formation de Nab avec laquelle j'ai créé Anna, mon agente IA de contenu. 8 modules vidéo, un générateur d'agente et une bibliothèque de prompts.</p>
+   <p class="who">Pour toi si tu as déjà une activité et que tu veux gagner du temps sur tes contenus.</p>
+   <a class="go" href="${AFFILIATE_PAGE}">DÉCOUVRIR LA FORMATION</a></div>`;
+ return `<div class="tool t-dm"><span class="tag">BIENTÔT</span>${star}
+   <h3>DIGITAL MUSE</h3>
+   <p>Je crée ton produit pour toi : ton PDF ou ton appli, à ton image. Les places ouvriront plus tard. Inscris-toi pour être prévenue en premier.</p>
+   <form id="wait" novalidate>
+    <input type="text" name="prenom" placeholder="Ton prénom" autocomplete="given-name" value="${esc(A.prenom||'')}">
+    <input type="email" name="email" placeholder="Ton e-mail" autocomplete="email">
+    <div class="fmt">
+     <label><input type="radio" name="fmt" value="PDF"><span>PDF</span></label>
+     <label><input type="radio" name="fmt" value="Appli"><span>Appli</span></label>
+     <label><input type="radio" name="fmt" value="Les deux" checked><span>Les deux</span></label>
+    </div>
+    <label class="rgpd"><input type="checkbox" name="ok"><span>J'accepte de recevoir les e-mails de WoMUM Studio. Je peux me désinscrire à tout moment.</span></label>
+    <button class="go" type="submit">REJOINDRE LA LISTE D'ATTENTE</button>
+    <p class="err" id="werr" hidden></p>
+   </form>
+   <p class="ok" id="wok" hidden></p></div>`;
+}
+function bindWait(){
+ const f=document.getElementById('wait'); if(!f) return;
+ const err=document.getElementById('werr');
+ f.onsubmit=async e=>{
+  e.preventDefault(); err.hidden=true;
+  const prenom=f.prenom.value.trim(), email=f.email.value.trim();
+  let msg='';
+  if(!prenom) msg='Écris ton prénom.';
+  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg='Vérifie ton e-mail.';
+  else if(!f.ok.checked) msg='Coche la case pour rejoindre la liste.';
+  if(msg){err.textContent=msg;err.hidden=false;return;}
+  const b=f.querySelector('button'); b.disabled=true; b.textContent='UN INSTANT…';
+  const data=new URLSearchParams(); data.append(WAIT_PRENOM,prenom); data.append(WAIT_EMAIL,email);
+  if(WAIT_FORMAT) data.append(WAIT_FORMAT,f.fmt.value);
+  try{await Promise.race([fetch(WAIT_FORM,{method:'POST',mode:'no-cors',body:data}),new Promise(r=>setTimeout(r,3000))]);}catch(_){}
+  f.hidden=true; const ok=document.getElementById('wok');
+  ok.textContent=`C'est noté, ${prenom}. Tu seras la première prévenue.`; ok.hidden=false;
+ };
+}
+home();
+</script>
+</body>
+</html>
