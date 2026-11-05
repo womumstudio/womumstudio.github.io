@@ -116,6 +116,9 @@ const WAIT_FORMAT=''; // ex. 'entry.123456' si ton formulaire a une question « 
 
 const AFFILIATE_PAGE='../agente-ia/';
 const KIT_PAGE='../#kit';
+/* VisionHer : carte cachée tant que ce lien est vide.
+   Colle ici ton lien d'affiliation VisionHer pour l'afficher. */
+const VISIONHER_LINK='';
 
 /* ---------- Les questions ---------- */
 const Q=[
@@ -267,12 +270,12 @@ function result(){
  const cible=CIBLE[A.cible]||'Les femmes';
  const hasActi=A.activite&&A.activite.startsWith('Oui');
  const wantsDFY=A.mode==='Qu\'on le fasse pour moi'||A.mode==='Être accompagnée';
- const tools=[];
- tools.push({k:'kit',star:!hasActi&&!wantsDFY});
- const pubT={k:'pub',star:hasActi}, dmT={k:'dm',star:wantsDFY};
- if(wantsDFY){tools.push(dmT,pubT);}else{tools.push(pubT,dmT);}
- if(wantsDFY) tools.unshift(tools.splice(tools.indexOf(dmT),1)[0]);
- else if(hasActi) tools.unshift(tools.splice(tools.indexOf(pubT),1)[0]);
+ const solo=A.mode==='Créer moi-même avec l\'IA'&&A.tech!=='Je débute';
+ let tools=[{k:'kit'},{k:'pub',star:hasActi}];
+ if(VISIONHER_LINK) tools.push({k:'vh',star:solo});
+ tools.push({k:'dm',star:wantsDFY});
+ if(!tools.some(t=>t.star)) tools[0].star=true;
+ tools=tools.filter(t=>t.star).concat(tools.filter(t=>!t.star));
 
  show(`<h2>${esc(prenom).toUpperCase()},</h2>
   <div class="accent" style="margin-bottom:6px">voici ton idée</div>
@@ -331,6 +334,11 @@ function toolHTML(t){
    <p>Ta Mini Agente IA, la formation de Nab avec laquelle j'ai créé Anna, mon agente IA de contenu. 8 modules vidéo, un générateur d'agente et une bibliothèque de prompts.</p>
    <p class="who">Pour toi si tu as déjà une activité et que tu veux gagner du temps sur tes contenus.</p>
    <a class="go" href="${AFFILIATE_PAGE}">DÉCOUVRIR LA FORMATION</a></div>`;
+ if(t.k==='vh') return `<div class="tool t-pub"><span class="tag">PUBLICITÉ</span>${star}
+   <h3>VISIONHER</h3>
+   <p>L'outil IA d'Émilie (La Méthode Digitale) qui te guide en 5 étapes pour créer ton produit numérique interactif, ton tunnel de vente et ta stratégie Instagram, sur Lovable ou Systeme.io.</p>
+   <p class="who">Pour toi si tu veux créer seule ton produit ou ton appli.</p>
+   <a class="go" href="${VISIONHER_LINK}" target="_blank" rel="noopener">DÉCOUVRIR VISIONHER</a></div>`;
  return `<div class="tool t-dm"><span class="tag">BIENTÔT</span>${star}
    <h3>DIGITAL MUSE</h3>
    <p>Je crée ton produit pour toi : ton PDF ou ton appli, à ton image. Les places ouvriront plus tard. Inscris-toi pour être prévenue en premier.</p>
