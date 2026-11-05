@@ -83,6 +83,11 @@
   .t-pub .who{color:var(--sable)} .t-pub .go{background:var(--ivoire);color:var(--espresso)}
   .t-dm{background:var(--sable)}
   .t-dm h3{color:var(--cacao)} .t-dm .go{background:var(--espresso);color:var(--ivoire)}
+  .sio{background:var(--cacao);color:var(--ivoire);border-radius:8px;padding:16px;margin-top:14px}
+  .sio .tag{display:inline-block;font-size:10px;letter-spacing:.25em;font-weight:400;padding:4px 9px;border-radius:4px;background:var(--ivoire);color:var(--espresso);margin-bottom:8px}
+  .sio h3{color:var(--ivoire);margin-bottom:6px}
+  .sio p{font-size:13.5px}
+  .sio .go{font-family:Cinzel,serif;font-size:13px;letter-spacing:.14em;border-radius:8px;padding:12px;margin-top:12px;display:block;text-align:center;text-decoration:none;background:var(--ivoire);color:var(--espresso)}
   .star{font-size:10px;letter-spacing:.2em;color:var(--champagne);margin-left:8px;font-weight:400}
   .t-pub .star{color:var(--sable)}
   form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
@@ -119,6 +124,8 @@ const KIT_PAGE='../#kit';
 /* VisionHer : carte cachée tant que ce lien est vide.
    Colle ici ton lien d'affiliation VisionHer pour l'afficher. */
 const VISIONHER_LINK='';
+/* Systeme.io (affiliation) : proposé dans l'étape « Où le vendre ». */
+const SYSTEMEIO_LINK='https://systeme.io/fr?sa=sa028338539637b6b5f76b64d89f5400f73a27fe15';
 
 /* ---------- Les questions ---------- */
 const Q=[
@@ -302,6 +309,16 @@ function result(){
    <ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol>
    ${A.frein&&FREIN[A.frein]?`<p style="margin-top:10px"><b style="font-weight:400">Ton frein, « ${esc(A.frein.toLowerCase())} » :</b> ${FREIN[A.frein]}</p>`:''}
   </div>
+  ${A.mode!=='Qu\'on le fasse pour moi'&&SYSTEMEIO_LINK?`<div class="card sell">
+   <span class="lbl">ÉTAPE SUIVANTE : OÙ LE VENDRE</span>
+   <p>Pour vendre ${fmt==='app'?'ton appli':'ton PDF'}, il te faut une page de vente, un paiement et l'envoi automatique ${fmt==='app'?'de l\'accès':'du fichier'}. Le plus simple : tout regrouper au même endroit.</p>
+   <div class="sio">
+    <span class="tag">PUBLICITÉ</span>
+    <h3>SYSTEME.IO</h3>
+    <p>Site, page de vente, paiement et e-mails dans un seul outil, avec une offre gratuite pour démarrer.</p>
+    <a class="go" href="${SYSTEMEIO_LINK}" target="_blank" rel="noopener">DÉCOUVRIR SYSTEME.IO</a>
+   </div>
+  </div>`:''}
   <div class="card">
    <span class="lbl">UNE VÉRITÉ HONNÊTE</span>
    <p class="truth">${TRUTHS[variant%TRUTHS.length]}</p>
