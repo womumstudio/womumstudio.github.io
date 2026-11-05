@@ -88,6 +88,22 @@
   .sio h3{color:var(--ivoire);margin-bottom:6px}
   .sio p{font-size:13.5px}
   .sio .go{font-family:Cinzel,serif;font-size:13px;letter-spacing:.14em;border-radius:8px;padding:12px;margin-top:12px;display:block;text-align:center;text-decoration:none;background:var(--ivoire);color:var(--espresso)}
+  .path{text-align:left;margin-top:10px;position:relative}
+  .step{display:flex;gap:14px;position:relative;padding-bottom:26px}
+  .step:not(:last-of-type)::before{content:'';position:absolute;left:15px;top:34px;bottom:0;width:1px;background:var(--champagne);opacity:.6}
+  .num{flex:none;width:31px;height:31px;border-radius:50%;border:1px solid var(--champagne);font-family:Cinzel,serif;font-size:14px;color:var(--cacao);display:flex;align-items:center;justify-content:center;background:var(--ivoire)}
+  .sbody{flex:1;min-width:0}
+  .sbody>h3{font-family:Cinzel,serif;font-weight:500;font-size:15px;letter-spacing:.1em;color:var(--cacao);margin-bottom:6px}
+  .sbody>p{font-size:14px;line-height:1.7}
+  .tbox{border-radius:8px;padding:16px;margin-top:12px}
+  .tbox .tag{display:inline-block;font-size:10px;letter-spacing:.25em;font-weight:400;padding:4px 9px;border-radius:4px;margin-bottom:8px}
+  .tbox h3{font-family:Cinzel,serif;font-weight:500;font-size:14.5px;letter-spacing:.1em;margin-bottom:6px}
+  .tbox p{font-size:13.5px;line-height:1.65}
+  .tbox .go{font-family:Cinzel,serif;font-size:12.5px;letter-spacing:.14em;border:0;border-radius:8px;padding:12px;margin-top:12px;display:block;width:100%;text-align:center;text-decoration:none;cursor:pointer}
+  .tbox.t-kit{background:#FBF8F3;border:1px solid rgba(194,160,107,.55)} .t-kit .tag{background:var(--espresso);color:var(--champagne)} .tbox.t-kit h3{color:var(--cacao)} .tbox.t-kit .go{background:var(--espresso);color:var(--ivoire)}
+  .sbody .tbox.t-pub h3{color:var(--ivoire)}
+  .tbox.t-pub{background:var(--cacao);color:var(--ivoire)} .tbox.t-pub .tag{background:var(--ivoire);color:var(--espresso)} .tbox.t-pub .go{background:var(--ivoire);color:var(--espresso)}
+  .tbox.t-dm{background:var(--sable)} .t-dm .tag{background:var(--espresso);color:var(--champagne)} .tbox.t-dm h3{color:var(--cacao)} .tbox.t-dm .go{background:var(--espresso);color:var(--ivoire)}
   .star{font-size:10px;letter-spacing:.2em;color:var(--champagne);margin-left:8px;font-weight:400}
   .t-pub .star{color:var(--sable)}
   form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
@@ -124,6 +140,8 @@ const KIT_PAGE='../#kit';
 /* VisionHer : carte cachée tant que ce lien est vide.
    Colle ici ton lien d'affiliation VisionHer pour l'afficher. */
 const VISIONHER_LINK='';
+/* La Méthode Digitale (« Méthode 7 jours », affiliation) : étape « Créer ton PDF ». Vide = masquée. */
+const METHODE_LINK='https://www.lamethodedigitale.com/methode-7-jours?sa=sa00073314321182413794bc00e2dd95b8b9ea00282d';
 /* Systeme.io (affiliation) : proposé dans l'étape « Où le vendre ». */
 const SYSTEMEIO_LINK='https://systeme.io/fr?sa=sa028338539637b6b5f76b64d89f5400f73a27fe15';
 
@@ -271,18 +289,11 @@ function result(){
   fmtWhy='Tu es à l\'aise et tu as du temps : une mini-appli interactive rend ton idée vivante et utile au quotidien.';}
  else{prod=pdf;fmtTitle='Un PDF d\'abord, puis une mini-appli';
   fmtWhy=`Commence par le PDF pour tester ton idée. Ensuite, tu pourras la décliner en mini-appli : « ${esc(ap.n)} ».`;}
- const steps=fmt==='app'
-  ?['Utilise les prompts du Kit pour résumer ton idée en une phrase.','Dessine sur papier les 3 écrans principaux de ton appli.','Fais tester une première version à 3 personnes de ton entourage.']
-  :['Utilise les prompts du Kit pour résumer ton idée en une phrase.','Demande à ta communauté (un sondage en story suffit) ce qui lui manque sur ce sujet.','Rédige le plan de ton PDF avec l\'IA, puis un premier chapitre.'];
- const cible=CIBLE[A.cible]||'Les femmes';
  const hasActi=A.activite&&A.activite.startsWith('Oui');
- const wantsDFY=A.mode==='Qu\'on le fasse pour moi'||A.mode==='Être accompagnée';
- const solo=A.mode==='Créer moi-même avec l\'IA'&&A.tech!=='Je débute';
- let tools=[{k:'kit'},{k:'pub',star:hasActi}];
- if(VISIONHER_LINK) tools.push({k:'vh',star:solo});
- tools.push({k:'dm',star:wantsDFY});
- if(!tools.some(t=>t.star)) tools[0].star=true;
- tools=tools.filter(t=>t.star).concat(tools.filter(t=>!t.star));
+ const dfy=A.mode==='Qu\'on le fasse pour moi';
+ const accomp=A.mode==='Être accompagnée';
+ const cible=CIBLE[A.cible]||'Les femmes';
+ const parcours=buildParcours(fmt,hasActi,dfy,accomp);
 
  show(`<h2>${esc(prenom).toUpperCase()},</h2>
   <div class="accent" style="margin-bottom:6px">voici ton idée</div>
@@ -304,21 +315,6 @@ function result(){
    <span class="lbl">CE QU'IL CONTIENT</span>
    <ol>${prod.p.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
   </div>
-  <div class="card alt">
-   <span class="lbl">TES 3 PREMIÈRES ÉTAPES</span>
-   <ol>${steps.map(x=>`<li>${x}</li>`).join('')}</ol>
-   ${A.frein&&FREIN[A.frein]?`<p style="margin-top:10px"><b style="font-weight:400">Ton frein, « ${esc(A.frein.toLowerCase())} » :</b> ${FREIN[A.frein]}</p>`:''}
-  </div>
-  ${A.mode!=='Qu\'on le fasse pour moi'&&SYSTEMEIO_LINK?`<div class="card sell">
-   <span class="lbl">ÉTAPE SUIVANTE : OÙ LE VENDRE</span>
-   <p>Pour vendre ${fmt==='app'?'ton appli':'ton PDF'}, il te faut une page de vente, un paiement et l'envoi automatique ${fmt==='app'?'de l\'accès':'du fichier'}. Le plus simple : tout regrouper au même endroit.</p>
-   <div class="sio">
-    <span class="tag">PUBLICITÉ</span>
-    <h3>SYSTEME.IO</h3>
-    <p>Site, page de vente, paiement et e-mails dans un seul outil, avec une offre gratuite pour démarrer.</p>
-    <a class="go" href="${SYSTEMEIO_LINK}" target="_blank" rel="noopener">DÉCOUVRIR SYSTEME.IO</a>
-   </div>
-  </div>`:''}
   <div class="card">
    <span class="lbl">UNE VÉRITÉ HONNÊTE</span>
    <p class="truth">${TRUTHS[variant%TRUTHS.length]}</p>
@@ -326,9 +322,10 @@ function result(){
   ${fmt!=='app'?`<button class="ghost" id="other">Une autre idée</button>`:''}
 
   <div class="line"></div>
-  <h2 class="tools-title" style="margin-top:0">LES OUTILS</h2>
-  <div class="accent" style="margin-bottom:4px">pour la créer</div>
-  ${tools.map(t=>toolHTML(t)).join('')}
+  <h2 style="margin-top:0">TON PARCOURS</h2>
+  <div class="accent" style="margin-bottom:4px">pas à pas</div>
+  <div class="path">${parcours}</div>
+  ${A.frein&&FREIN[A.frein]?`<div class="card alt"><span class="lbl">TON FREIN : ${esc(A.frein.toUpperCase())}</span><p>${FREIN[A.frein]}</p></div>`:''}
 
   <div class="line"></div>
   <p class="lead">Ton idée te plaît ?<br>Dis-le-moi en commentaire sur Instagram ou TikTok : <b style="font-weight:400">@womumstudio</b></p>
@@ -337,27 +334,15 @@ function result(){
   ${footer}`);
  const o=document.getElementById('other'); if(o) o.onclick=()=>{variant++;result();};
  document.getElementById('restart').onclick=()=>{for(const k in A)delete A[k];home();};
+ const sd=document.getElementById('showdm'); if(sd) sd.onclick=e=>{e.preventDefault();document.getElementById('dmwrap').hidden=false;sd.parentElement.hidden=true;};
  bindWait();
 }
-function toolHTML(t){
- const star=t.star?`<span class="star">POUR TOI</span>`:'';
- if(t.k==='kit') return `<div class="tool t-kit"><span class="tag">OFFERT</span>${star}
-   <h3>LE KIT DIGITAL MUSE</h3>
-   <p>20 prompts IA pour trouver et préciser ton idée, et une checklist de lancement.</p>
-   <p class="who">Pour toutes, surtout si tu démarres.</p>
-   <a class="go" href="${KIT_PAGE}">JE RÉCUPÈRE LE KIT</a></div>`;
- if(t.k==='pub') return `<div class="tool t-pub"><span class="tag">PUBLICITÉ</span>${star}
-   <h3>CRÉE TON AGENTE IA</h3>
-   <p>Ta Mini Agente IA, la formation de Nab avec laquelle j'ai créé Anna, mon agente IA de contenu. 8 modules vidéo, un générateur d'agente et une bibliothèque de prompts.</p>
-   <p class="who">Pour toi si tu as déjà une activité et que tu veux gagner du temps sur tes contenus.</p>
-   <a class="go" href="${AFFILIATE_PAGE}">DÉCOUVRIR LA FORMATION</a></div>`;
- if(t.k==='vh') return `<div class="tool t-pub"><span class="tag">PUBLICITÉ</span>${star}
-   <h3>VISIONHER</h3>
-   <p>L'outil IA d'Émilie (La Méthode Digitale) qui te guide en 5 étapes pour créer ton produit numérique interactif, ton tunnel de vente et ta stratégie Instagram, sur Lovable ou Systeme.io.</p>
-   <p class="who">Pour toi si tu veux créer seule ton produit ou ton appli.</p>
-   <a class="go" href="${VISIONHER_LINK}" target="_blank" rel="noopener">DÉCOUVRIR VISIONHER</a></div>`;
- return `<div class="tool t-dm"><span class="tag">BIENTÔT</span>${star}
-   <h3>DIGITAL MUSE</h3>
+function box(cls,tag,title,text,href,label,ext){
+ return `<div class="tbox ${cls}"><span class="tag">${tag}</span><h3>${title}</h3><p>${text}</p>
+  <a class="go" href="${href}"${ext?' target="_blank" rel="noopener"':''}>${label}</a></div>`;
+}
+function waitForm(){
+ return `<div class="tbox t-dm"><span class="tag">BIENTÔT</span><h3>DIGITAL MUSE</h3>
    <p>Je crée ton produit pour toi : ton PDF ou ton appli, à ton image. Les places ouvriront plus tard. Inscris-toi pour être prévenue en premier.</p>
    <form id="wait" novalidate>
     <input type="text" name="prenom" placeholder="Ton prénom" autocomplete="given-name" value="${esc(A.prenom||'')}">
@@ -372,6 +357,36 @@ function toolHTML(t){
     <p class="err" id="werr" hidden></p>
    </form>
    <p class="ok" id="wok" hidden></p></div>`;
+}
+function stepHTML(n,title,text,extra){
+ return `<div class="step"><span class="num">${n}</span><div class="sbody"><span class="lbl">ÉTAPE ${n}</span><h3>${title}</h3><p>${text}</p>${extra||''}</div></div>`;
+}
+function buildParcours(fmt,hasActi,dfy,accomp){
+ const out=[]; let n=1;
+ const kit=box('t-kit','OFFERT','LE KIT DIGITAL MUSE','20 prompts IA pour trouver et préciser ton idée, et une checklist de lancement.',KIT_PAGE,'JE RÉCUPÈRE LE KIT');
+ if(dfy){
+  out.push(stepHTML(n++,'PRÉCISER TON IDÉE','Avant qu\'on crée ton produit, pose ton idée en une phrase : pour qui, et pour l\'aider à quoi. Le Kit t\'y aide.',kit));
+  out.push(stepHTML(n++,'ON LE CRÉE POUR TOI','Tu préfères qu\'on s\'en occupe ? C\'est exactement le rôle de Digital Muse.',waitForm()));
+ }else{
+  out.push(stepHTML(n++,'TROUVER ET VALIDER TON IDÉE','Résume ton idée en une phrase, puis demande à ta communauté ce qui lui manque. Un sondage en story suffit.',kit));
+  const app=fmt==='app', pdfFirst=!app;
+  let create='', ctext;
+  if(app){
+   ctext='Dessine sur papier les 3 écrans principaux de ton appli, puis fais tester une première version à 3 personnes de ton entourage.';
+   if(VISIONHER_LINK) create=box('t-pub','PUBLICITÉ','VISIONHER','L\'outil IA d\'Émilie (La Méthode Digitale) qui te guide en 5 étapes pour créer ton produit numérique interactif, ton tunnel de vente et ta stratégie Instagram, sur Lovable ou Systeme.io.',VISIONHER_LINK,'DÉCOUVRIR VISIONHER',true);
+  }else{
+   ctext='Rédige le plan de ton PDF avec l\'IA, puis un premier chapitre. Ensuite, mets-le en page proprement.';
+   if(METHODE_LINK) create=box('t-pub','PUBLICITÉ','LA MÉTHODE DIGITALE','La formation d\'Émilie pour créer ton premier PDF avec l\'IA, à ton rythme : 7 modules vidéo pour débutantes, des modèles d\'ebook et un tunnel de vente prêt à l\'emploi.',METHODE_LINK,'DÉCOUVRIR LA FORMATION',true);
+  }
+  out.push(stepHTML(n++,app?'CRÉER TON APPLI':'CRÉER TON PDF',ctext,create));
+  if(SYSTEMEIO_LINK) out.push(stepHTML(n++,'LE METTRE EN VENTE',`Il te faut une page de vente, un paiement et l'envoi automatique ${app?'de l\'accès':'du fichier'}. Le plus simple : tout regrouper au même endroit.`,
+   box('t-pub','PUBLICITÉ','SYSTEME.IO','Site, page de vente, paiement et e-mails dans un seul outil, avec une offre gratuite pour démarrer.',SYSTEMEIO_LINK,'DÉCOUVRIR SYSTEME.IO',true)));
+  out.push(stepHTML(n++,'EN PARLER SANS T\'ÉPUISER',hasActi?'Tu as déjà une activité : ton temps va surtout partir dans tes contenus. Une agente IA peut préparer tes posts, tes stories et tes légendes, et toi tu valides.':'Pour faire connaître ton produit, il faudra publier régulièrement. Le jour où tes contenus te prennent trop de temps, une agente IA peut t\'aider.',
+   box('t-pub','PUBLICITÉ','TA MINI AGENTE IA','La formation de Nab avec laquelle j\'ai créé Anna, mon agente IA de contenu. 8 modules vidéo, un générateur d\'agente et une bibliothèque de prompts.',AFFILIATE_PAGE,'DÉCOUVRIR LA FORMATION')));
+  if(accomp||pdfFirst&&fmt==='both') out.push(stepHTML(n++,'ET SI ON LE FAISAIT POUR TOI ?','Tu préfères être accompagnée, ou déléguer la création ? Digital Muse arrive bientôt.',waitForm()));
+  else out.push(`<p class="small" style="margin-top:22px">Tu préfères qu'on crée ton produit pour toi ? <a href="#" id="showdm" style="color:var(--cacao)">Rejoins la liste d'attente Digital Muse</a></p><div id="dmwrap" hidden>${waitForm()}</div>`);
+ }
+ return out.join('');
 }
 function bindWait(){
  const f=document.getElementById('wait'); if(!f) return;
